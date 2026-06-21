@@ -150,7 +150,7 @@ export function Footer() {
               تهران، ایران
             </span>
           </div>
-          <p>© ۱۴۰۴ {siteConfig.name}. تمام حقوق محفوظ است.</p>
+          <p>© ۱۴۰۵ {siteConfig.name}. تمام حقوق محفوظ است.</p>
         </div>
       </div>
     </footer>

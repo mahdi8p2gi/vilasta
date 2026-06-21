@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search, MapPin, CalendarDays, Users, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { Search, MapPin, CalendarDays, Users, ChevronDown, Sparkles, Minus, Plus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   Popover, PopoverContent, PopoverTrigger,
@@ -16,7 +15,16 @@ import { cn } from "@/lib/utils";
 import { jalaliToday, jalaliPlusDays, formatJalaliShort } from "@/lib/date-utils";
 import { type DateRange } from "react-day-picker";
 
-const cities = ["کیش", "تهران", "اصفهان", "شیراز", "یزد", "قشم", "مازندران", "گیلان"];
+const cities = [
+  { name: "کیش", emoji: "🏝️" },
+  { name: "تهران", emoji: "🏙️" },
+  { name: "اصفهان", emoji: "🕌" },
+  { name: "شیراز", emoji: "🌸" },
+  { name: "یزد", emoji: "🏜️" },
+  { name: "قشم", emoji: "🌊" },
+  { name: "مازندران", emoji: "🌲" },
+  { name: "گیلان", emoji: "🌿" },
+];
 
 export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" }) {
   const { search, setSearch, setView } = useAppStore();
@@ -44,51 +52,70 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
     ? Math.round((dateRange.to.getTime() - dateRange.from.getTime()) / 86400000)
     : 0;
 
+  const isHero = variant === "hero";
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3, duration: 0.6 }}
+      transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "relative w-full",
-        variant === "hero"
-          ? "glass rounded-3xl p-2 shadow-2xl"
+        isHero
+          ? "rounded-[28px] border border-white/20 bg-white/10 p-2.5 shadow-2xl backdrop-blur-2xl"
           : "rounded-2xl border border-border bg-card p-2 shadow-luxury"
       )}
     >
-      <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-[1.2fr_1.4fr_1fr_auto] sm:divide-x sm:divide-y-0 sm:divide-x-reverse rtl:sm:divide-x-reverse">
+      {/* Inner container with segments */}
+      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[1.3fr_1.5fr_1.1fr_auto] sm:gap-0">
         {/* Destination */}
         <Popover open={cityOpen} onOpenChange={setCityOpen}>
           <PopoverTrigger asChild>
-            <button className="flex flex-col items-start gap-0.5 rounded-2xl px-4 py-3 text-right transition-colors hover:bg-accent">
-              <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5" /> مقصد
+            <button
+              className={cn(
+                "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300",
+                isHero ? "hover:bg-white/15" : "hover:bg-accent",
+                cityOpen && (isHero ? "bg-white/15" : "bg-accent")
+              )}
+            >
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 text-emerald-brand" />
+                مقصد
               </span>
-              <span className={cn("text-sm font-medium", !search.city && "text-muted-foreground/70")}>
-                {search.city || "کجا می‌روید؟"}
+              <span className="flex items-center gap-1.5">
+                <span className={cn("text-sm font-bold", !search.city && "font-normal text-muted-foreground/70")}>
+                  {search.city || "کجا می‌روید؟"}
+                </span>
+                <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-300", cityOpen && "rotate-180")} />
               </span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-72 p-2" align="start">
-            <div className="space-y-1">
+          <PopoverContent className="w-80 p-2" align="start" sideOffset={8}>
+            <div className="space-y-0.5">
               <button
                 onClick={() => { setSearch({ city: "" }); setCityOpen(false); }}
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm hover:bg-accent"
+                className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent"
               >
-                همه شهرها
-                {!search.city && <Badge variant="secondary">انتخاب شده</Badge>}
+                <span className="flex items-center gap-2 font-medium">
+                  <span className="text-lg">🌍</span>
+                  همه شهرها
+                </span>
+                {!search.city && <Badge variant="secondary" className="rounded-full">✓</Badge>}
               </button>
+              <div className="my-1 h-px bg-border/60" />
               {cities.map((c) => (
                 <button
-                  key={c}
-                  onClick={() => { setSearch({ city: c }); setCityOpen(false); }}
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm hover:bg-accent"
+                  key={c.name}
+                  onClick={() => { setSearch({ city: c.name }); setCityOpen(false); }}
+                  className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent"
                 >
-                  <span className="flex items-center gap-2">
-                    <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-                    {c}
+                  <span className="flex items-center gap-2.5">
+                    <span className="text-lg">{c.emoji}</span>
+                    <span className="font-medium">{c.name}</span>
                   </span>
-                  {search.city === c && <Badge variant="secondary">✓</Badge>}
+                  {search.city === c.name && (
+                    <Badge variant="secondary" className="rounded-full">✓</Badge>
+                  )}
                 </button>
               ))}
             </div>
@@ -98,18 +125,28 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
         {/* Date range */}
         <Popover open={dateOpen} onOpenChange={setDateOpen}>
           <PopoverTrigger asChild>
-            <button className="flex flex-col items-start gap-0.5 rounded-2xl px-4 py-3 text-right transition-colors hover:bg-accent">
-              <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                <CalendarDays className="h-3.5 w-3.5" /> تاریخ
+            <button
+              className={cn(
+                "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300 sm:border-x",
+                isHero ? "hover:bg-white/15 sm:border-white/15" : "hover:bg-accent sm:border-border/60",
+                dateOpen && (isHero ? "bg-white/15" : "bg-accent")
+              )}
+            >
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                <CalendarDays className="h-3.5 w-3.5 text-emerald-brand" />
+                تاریخ سفر
               </span>
-              <span className="text-sm font-medium">
-                {dateRange?.from
-                  ? `${formatJalaliShort(dateRange.from)}${dateRange?.to ? ` — ${formatJalaliShort(dateRange.to)}` : ""}`
-                  : "انتخاب تاریخ"}
+              <span className="flex items-center gap-1.5">
+                <span className="text-sm font-bold">
+                  {dateRange?.from
+                    ? `${formatJalaliShort(dateRange.from)}${dateRange?.to ? ` — ${formatJalaliShort(dateRange.to)}` : ""}`
+                    : "انتخاب تاریخ"}
+                </span>
+                <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-300", dateOpen && "rotate-180")} />
               </span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto p-0" align="start" sideOffset={8}>
             <Calendar
               mode="range"
               selected={dateRange}
@@ -124,35 +161,51 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
         {/* Guests */}
         <Popover open={guestOpen} onOpenChange={setGuestOpen}>
           <PopoverTrigger asChild>
-            <button className="flex flex-col items-start gap-0.5 rounded-2xl px-4 py-3 text-right transition-colors hover:bg-accent">
-              <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                <Users className="h-3.5 w-3.5" /> مسافران
+            <button
+              className={cn(
+                "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300",
+                isHero ? "hover:bg-white/15" : "hover:bg-accent",
+                guestOpen && (isHero ? "bg-white/15" : "bg-accent")
+              )}
+            >
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                <Users className="h-3.5 w-3.5 text-emerald-brand" />
+                مسافران
               </span>
-              <span className="text-sm font-medium">
-                {toPersianDigits(guests)} نفر
+              <span className="flex items-center gap-1.5">
+                <span className="text-sm font-bold">
+                  {toPersianDigits(guests)} نفر
+                </span>
+                <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-300", guestOpen && "rotate-180")} />
               </span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-56 p-4" align="start">
+          <PopoverContent className="w-64 p-4" align="start" sideOffset={8}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium">تعداد مسافر</p>
-                <p className="text-xs text-muted-foreground">بزرگسال</p>
+                <p className="text-sm font-semibold">تعداد مسافر</p>
+                <p className="text-xs text-muted-foreground">بزرگسال (۱۶+ سال)</p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Button
                   size="icon"
                   variant="outline"
-                  className="h-8 w-8 rounded-full"
+                  className="h-9 w-9 rounded-full border-primary/30 hover:border-primary hover:bg-primary/10"
                   onClick={() => setGuests((g) => Math.max(1, g - 1))}
-                >−</Button>
-                <span className="w-6 text-center text-sm font-semibold">{toPersianDigits(guests)}</span>
+                  disabled={guests <= 1}
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </Button>
+                <span className="w-8 text-center text-base font-bold">{toPersianDigits(guests)}</span>
                 <Button
                   size="icon"
                   variant="outline"
-                  className="h-8 w-8 rounded-full"
+                  className="h-9 w-9 rounded-full border-primary/30 hover:border-primary hover:bg-primary/10"
                   onClick={() => setGuests((g) => Math.min(16, g + 1))}
-                >+</Button>
+                  disabled={guests >= 16}
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                </Button>
               </div>
             </div>
           </PopoverContent>
@@ -163,22 +216,39 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
           <Button
             onClick={onSearch}
             size="lg"
-            className="h-full w-full gap-2 rounded-2xl bg-gradient-to-l from-primary to-emerald-brand text-primary-foreground shadow-lg transition-transform hover:scale-[1.02]"
+            className="group relative h-full w-full min-w-[120px] gap-2 overflow-hidden rounded-2xl bg-gradient-to-l from-primary via-emerald-brand to-primary bg-[length:200%_100%] text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-500 hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/40"
           >
-            <Search className="h-4 w-4" />
-            <span>جستجو</span>
+            <Search className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+            <span className="font-bold">جستجو</span>
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
           </Button>
         </div>
       </div>
 
-      {nights > 0 && variant === "hero" && (
-        <div className="px-3 pb-2 pt-1">
-          <Badge variant="outline" className="gap-1 text-xs">
-            <CalendarDays className="h-3 w-3" />
-            {toPersianDigits(nights)} شب اقامت
-          </Badge>
-        </div>
-      )}
+      {/* Nights indicator */}
+      <AnimatePresence>
+        {nights > 0 && isHero && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="flex items-center gap-2 px-3 pb-2 pt-1">
+              <Badge variant="outline" className="gap-1.5 border-white/20 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur">
+                <Sparkles className="h-3 w-3 text-gold" />
+                {toPersianDigits(nights)} شب اقامت
+              </Badge>
+              {search.city && (
+                <Badge variant="outline" className="gap-1.5 border-white/20 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur">
+                  <MapPin className="h-3 w-3 text-gold" />
+                  {search.city}
+                </Badge>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

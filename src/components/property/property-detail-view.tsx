@@ -524,8 +524,8 @@ function BookingWidget({ property }: { property: Property }) {
       <CardContent className="space-y-4 p-5">
         {/* Price */}
         <div className="flex items-baseline justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold ltr-nums">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-2xl font-bold">
               {formatTomanCompact(property.pricePerNight)}
             </span>
             <span className="text-sm text-muted-foreground">/ شب</span>

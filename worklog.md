@@ -272,3 +272,30 @@ Stage Summary:
 - Mobile menu completely redesigned with animated nav items, logo+close in same row, morphing hamburger icon
 - Search modal: input + close button in same row
 - Verified: 25 shine elements on home, mobile menu logo+close sameRow=true, search input+close sameRow=true
+
+---
+Task ID: 14
+Agent: Main (orchestrator)
+Task: Redesign search bar, slow listing hover, fix size text, redesign auth modal, fix price RTL, fix city images, update email/year, create README
+
+Work Log:
+- Redesigned SmartSearch: glassmorphism with rounded-[28px], backdrop-blur-2xl, segment-style fields with chevron rotations, gradient search button with shine sweep, animated nights badge with AnimatePresence, city emojis in popover
+- Redesigned SearchModal: input + close button in same flex row (showCloseButton=false, custom DialogClose)
+- Redesigned AuthModal: professional layout with logo+close in same row header, animated mode transitions (slide x), icon quick-login buttons (Crown/Building/UserCircle), trust badges, terms text, gradient submit button with shine, proper field design with hover border + focus ring
+- Fixed PropertyCard: slow hover animation (duration-700 ease-out, translate-y-2), slow image zoom (duration-[1200ms]), price tag RTL ("۴.۵ میلیون / شب" not "شب / ۴.۵ میلیون" — removed ltr-nums), size text "۴۵۰ متر مربع" (not "450م²")
+- Fixed property detail booking widget price tag RTL (removed ltr-nums)
+- Fixed destination images: searched real city-relevant photos via image-search skill for Isfahan (Naqsh-e Jahan), Yazd (windcatcher architecture), Qeshm (island/valley) — now using OSS-hosted images from sfile.chatglm.cn
+- Added sfile.chatglm.cn to next.config.ts remotePatterns
+- Updated email: info@vilasta.ir → themahdikga@gmail.com in siteConfig
+- Updated year: ۱۴۰۴ → ۱۴۰۵ in footer
+- Created comprehensive README.md with badges, features, tech stack, structure, API endpoints, demo accounts, design system docs
+- Re-seeded database with new city images
+- Lint passes clean, no console errors
+
+Stage Summary:
+- Search bar fully redesigned with glassmorphism + animated segments
+- Auth modal redesigned: logo+close same row, animated mode switching, icon quick-login
+- Listing cards: slow 700ms hover + 1200ms image zoom, correct Persian price "۶.۲ میلیون / شب", readable size "۴۵۰ متر مربع"
+- City images: Isfahan/Yazd/Qeshm now show actual city landmarks (OSS-hosted, verified)
+- Email updated, year updated to ۱۴۰۵
+- Modern README created with full documentation

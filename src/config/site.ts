@@ -19,7 +19,7 @@ export const siteConfig = {
     "پلتفرم رزرو آنلاین ویلا، هتل و اقامتگاه‌های لوکس. تجربه‌ای متفاوت از سفر در ایران.",
   url: "https://vilasta.ir",
   phone: "۰۲۱-۹۱۰۰۲۰۳۰",
-  email: "info@vilasta.ir",
+  email: "themahdikga@gmail.com",
   social: {
     instagram: "https://instagram.com/vilasta",
     telegram: "https://t.me/vilasta",

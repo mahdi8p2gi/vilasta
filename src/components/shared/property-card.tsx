@@ -49,7 +49,7 @@ export function PropertyCard({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
       onClick={() => goProperty(property.id)}
-      className="group cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:border-primary/30"
+      className="group cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-700 ease-out hover:-translate-y-2 hover:shadow-card-hover hover:border-primary/40"
     >
       {/* Image */}
       <div className="img-shine relative aspect-[4/3] overflow-hidden bg-muted">
@@ -61,7 +61,7 @@ export function PropertyCard({
           loading="lazy"
           placeholder="blur"
           blurDataURL={SHIMMER_BLUR}
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
 
@@ -91,9 +91,9 @@ export function PropertyCard({
         </button>
 
         {/* price tag */}
-        <div className="absolute bottom-3 right-3 rounded-full glass px-3 py-1.5 text-sm font-bold text-foreground shadow-sm">
-          <span className="ltr-nums">{formatTomanCompact(property.pricePerNight)}</span>
-          <span className="mr-1 text-xs font-normal text-muted-foreground">/ شب</span>
+        <div className="absolute bottom-3 right-3 flex items-baseline gap-1 rounded-full glass px-3 py-1.5 text-sm font-bold text-foreground shadow-sm">
+          <span>{formatTomanCompact(property.pricePerNight)}</span>
+          <span className="text-xs font-normal text-muted-foreground">/ شب</span>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ export function PropertyCard({
             {property.size && (
               <span className="mr-auto flex items-center gap-1">
                 <Maximize className="h-3.5 w-3.5" />
-                {toPersianDigits(property.size)} م²
+                {toPersianDigits(property.size)} متر مربع
               </span>
             )}
           </div>
