@@ -28,7 +28,7 @@ const amenitiesList = [
   "elevator", "security", "seaView", "mountainView", "petFriendly"
 ];
 
-const img = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&q=80`;
+const img = (id: string) => id.startsWith("http") ? id : `https://images.unsplash.com/photo-${id}?w=1200&q=80`;
 
 // Each property gets 4 distinct, relevant images matching its type & location.
 // No image ID is reused across properties.
@@ -47,8 +47,8 @@ const propertyImages = {
   dariushVilla:  ["1564507592333-c60657eea523", "1600210492486-724fe5c67fb0", "1600585154340-be6161a56a0c", "1568605114967-8130f3a36994"],
   // 7. هتل اسپیناس پالاس تهران — luxury hotel lobby & suite
   espinasHotel:  ["1571003123894-1f0594d2b5d9", "1582719508461-905c673771fd", "1564501049412-61c2a3083791", "1545324418-cc1a3fa10c00"],
-  // 8. آپارتمان دنج اصفهان — apartment near historical sites
-  isfahanApt:    ["1542315192-1f61a1792f33", "1484154218962-a197022b5858", "1502005229762-cf1b2da7c5d6", "1556909114-f6e7ad7d3136"],
+  // 8. آپارتمان دنج اصفهان — Persian-style apartment near Naqsh-e Jahan
+  isfahanApt:    ["https://sfile.chatglm.cn/images-ppt/33bc44f0cab6.jpg", "https://sfile.chatglm.cn/images-ppt/d9a6090ef579.jpg", "https://sfile.chatglm.cn/images-ppt/e8a51252d642.jpg", "https://sfile.chatglm.cn/images-ppt/6c5df13129a9.jpg"],
   // 9. اقامتگاه بوتیک شیراز — Persian boutique hotel with garden
   shirazBoutique:["1571896349842-33c89424de2d", "1540541338287-41700207dee6", "1520250497591-112f2f40a3f4", "1599809275671-b5942cabc7a2"],
   // 10. کلبه کوهستانی قشم — island/desert cottage
