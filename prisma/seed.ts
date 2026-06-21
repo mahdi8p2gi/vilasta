@@ -16,10 +16,10 @@ const destinations = [
   { name: "تهران", province: "تهران", image: "https://images.unsplash.com/photo-1565374395542-0ce18882c857?w=800&q=80" },
   { name: "اصفهان", province: "اصفهان", image: "https://sfile.chatglm.cn/images-ppt/021803365a05.jpg" },
   { name: "شیراز", province: "فارس", image: "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=800&q=80" },
-  { name: "یزد", province: "یزد", image: "https://sfile.chatglm.cn/images-ppt/c3dabf9a0cd8.jpg" },
+  { name: "یزد", province: "یزد", image: "https://sfile.chatglm.cn/images-ppt/81ebebb4308d.jpg" },
   { name: "قشم", province: "هرمزگان", image: "https://sfile.chatglm.cn/images-ppt/984720cb3481.jpg" },
   { name: "مازندران", province: "مازندران", image: "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?w=800&q=80" },
-  { name: "گیلان", province: "گیلان", image: "https://images.unsplash.com/photo-1469041797191-50ace28483c3?w=800&q=80" },
+  { name: "گیلان", province: "گیلان", image: "https://sfile.chatglm.cn/images-ppt/2ab6bca167ad.jpg" },
 ];
 
 const amenitiesList = [
