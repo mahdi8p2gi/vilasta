@@ -6,6 +6,7 @@ import Image from "next/image";
 import { SmartSearch } from "@/components/home/smart-search";
 import { Badge } from "@/components/ui/badge";
 import { toPersianDigits } from "@/lib/persian";
+import { heroImage, SHIMMER_BLUR } from "@/lib/image";
 
 const stats = [
   { value: "+۲۵۰", label: "اقامتگاه لوکس" },
@@ -26,11 +27,13 @@ export function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80"
+          src={heroImage("https://images.unsplash.com/photo-1582719508461-905c673771fd")}
           alt="ویلای لوکس ساحلی"
           fill
           priority
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={SHIMMER_BLUR}
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />

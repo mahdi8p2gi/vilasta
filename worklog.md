@@ -199,3 +199,33 @@ Stage Summary:
 - Persian RTL throughout with Vazirmatn font, luxury emerald+gold design system
 - Database: 4 users, 12 properties, 34 reviews, 5 bookings, 8 destinations, 5 categories
 - 18 API endpoints all returning 200
+
+---
+Task ID: 12
+Agent: Main (orchestrator)
+Task: Fix images, image loading speed, complete destinations/experiences/host-intro views, back-to-top button, close icon position, bug fixes
+
+Work Log:
+- Replaced ALL property images in seed with relevant, non-repeated sets (12 properties × 4 distinct images each = 48 unique image IDs). Each property's images now match its type and location (coastal villa→beach, Yazd resort→traditional Persian architecture, forest cottage→cabin, etc.)
+- Re-seeded database with the new image sets
+- Created /lib/image.ts with sizedImage(), cardImage() (w=640), detailImage() (w=1200), heroImage() (w=1920), SHIMMER_BLUR constant for blur placeholders
+- Optimized all image components: PropertyCard, Hero, CategoriesSection, PopularDestinations, HostCta, PropertyDetailView gallery (hero+thumbnails+lightbox), SearchModal — added loading="lazy", placeholder="blur", blurDataURL, right-sized URLs, proper sizes attributes
+- Converted search modal <img> tags to use loading="lazy"
+- Added 3 new views to AppShell: destinations, experiences, host-intro
+- Fixed navbar routing: removed the redirect-to-listing hack so مقاصد/تجربه‌ها/میزبان شوید nav items now route to their dedicated views
+- Built DestinationsView: hero, featured insights (3 cards), all destinations grid (selectable), properties in selected city section
+- Built ExperiencesView: hero, category filter pills (6 categories), 8 experience cards with rating/duration/guests/price, CTA card
+- Built HostIntroView: full hero with CTA, stats strip, 4 perks, 4-step how-it-works, host testimonials, FAQ, final CTA
+- Added BackToTop component (fixed bottom-left, appears after 600px scroll, animated with pulse ring)
+- Fixed close icon position in Sheet (right-4 → left-4) and Dialog (right-4 → left-4) components — now on the LEFT side in RTL as requested
+- Fixed accessibility warnings: added DialogTitle + DialogDescription to search modal and property detail lightbox
+- Fixed next/image sizes warning on lightbox image (100vw → (max-width:1024px) 100vw, 1024px)
+- Lint passes clean, no console errors, no runtime errors
+
+Stage Summary:
+- All 9 property card images verified distinct and relevant to property type/location
+- Image loading speed improved via: smaller URLs (w=640 for cards vs w=1200 before), blur placeholders, lazy loading, auto=format&fit=crop
+- 3 new complete views: مقاصد (Destinations), تجربه‌ها (Experiences), میزبان شوید (Host Intro)
+- Back-to-top button functional (bottom-left, appears on scroll)
+- Close icons in Sheet/Dialog/Search modal all now on the LEFT side (RTL correct)
+- Booking flow re-verified end-to-end (login → property → book → pay → confirmation 201)

@@ -5,6 +5,7 @@ import { ArrowLeft, TrendingUp, ShieldCheck, Headphones, BadgeDollarSign } from 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/store/app-store";
+import { detailImage, SHIMMER_BLUR } from "@/lib/image";
 
 const perks = [
   { icon: BadgeDollarSign, title: "کسب درآمد دلاری", desc: "تا ۸۰٪ سود خالص برای میزبانان" },
@@ -85,10 +86,13 @@ export function HostCta() {
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=80"
+                src={detailImage("https://images.unsplash.com/photo-1564013799919-ab600027ffc6")}
                 alt="ویلای لوکس"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={SHIMMER_BLUR}
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />

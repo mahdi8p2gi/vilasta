@@ -41,7 +41,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -64,6 +64,7 @@ import {
   nightsBetween,
 } from "@/lib/persian";
 import { jalaliPlusDays } from "@/lib/date-utils";
+import { detailImage, cardImage, SHIMMER_BLUR } from "@/lib/image";
 import { cn } from "@/lib/utils";
 import type { Property, Review } from "@/types";
 
@@ -224,10 +225,13 @@ function Gallery({
           aria-label="نمایش همه تصاویر"
         >
           <Image
-            src={hero}
+            src={detailImage(hero)}
             alt={property.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+            placeholder="blur"
+            blurDataURL={SHIMMER_BLUR}
             className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
@@ -242,10 +246,13 @@ function Gallery({
             aria-label={`تصویر ${toPersianDigits(i + 2)}`}
           >
             <Image
-              src={img}
+              src={cardImage(img)}
               alt=""
               fill
               sizes="25vw"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL={SHIMMER_BLUR}
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             {i === 3 && all.length > 5 && (
@@ -1131,14 +1138,19 @@ function Lightbox({
         className="max-w-5xl border-border/40 bg-black/95 p-0 sm:rounded-2xl"
       >
         <DialogTitle className="sr-only">{title} — نمایشگر تصاویر</DialogTitle>
+        <DialogDescription className="sr-only">
+          نمایش تمام‌صفحه تصاویر اقامتگاه با امکان جابه‌جایی
+        </DialogDescription>
         <div className="relative h-[80vh] w-full">
           {index !== null && images[index] && (
             <Image
-              src={images[index]}
+              src={detailImage(images[index])}
               alt={title}
               fill
-              sizes="100vw"
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="object-contain"
+              placeholder="blur"
+              blurDataURL={SHIMMER_BLUR}
               priority
             />
           )}

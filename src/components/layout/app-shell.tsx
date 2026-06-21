@@ -14,6 +14,10 @@ import { BookingView } from "@/components/booking/booking-view";
 import { UserDashboard } from "@/components/dashboard/user-dashboard";
 import { HostDashboard } from "@/components/dashboard/host-dashboard";
 import { AdminDashboard } from "@/components/dashboard/admin-dashboard";
+import { DestinationsView } from "@/components/destinations/destinations-view";
+import { ExperiencesView } from "@/components/experiences/experiences-view";
+import { HostIntroView } from "@/components/host/host-intro-view";
+import { BackToTop } from "@/components/shared/back-to-top";
 
 const viewVariants = {
   initial: { opacity: 0, y: 8 },
@@ -45,6 +49,12 @@ export function AppShell() {
         return <HostDashboard />;
       case "dashboard-admin":
         return <AdminDashboard />;
+      case "destinations":
+        return <DestinationsView />;
+      case "experiences":
+        return <ExperiencesView />;
+      case "host-intro":
+        return <HostIntroView />;
       default:
         return <HomeView />;
     }
@@ -71,6 +81,7 @@ export function AppShell() {
 
       <AuthModal />
       <SearchModal />
+      <BackToTop />
     </div>
   );
 }

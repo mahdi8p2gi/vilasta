@@ -7,6 +7,7 @@ import { useAppStore } from "@/store/app-store";
 import { propertyTypeMeta } from "@/config/site";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { toPersianDigits } from "@/lib/persian";
+import { cardImage, SHIMMER_BLUR } from "@/lib/image";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function CategoriesSection() {
@@ -42,10 +43,13 @@ export function CategoriesSection() {
               {cat ? (
                 <>
                   <Image
-                    src={cat.image}
+                    src={cardImage(cat.image)}
                     alt={cat.name}
                     fill
                     sizes="(max-width: 640px) 50vw, 20vw"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={SHIMMER_BLUR}
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

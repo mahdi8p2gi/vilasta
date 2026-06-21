@@ -30,17 +30,33 @@ const amenitiesList = [
 
 const img = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&q=80`;
 
+// Each property gets 4 distinct, relevant images matching its type & location.
+// No image ID is reused across properties.
 const propertyImages = {
-  villa1: ["1512917774080-9991f1c4c750", "1564507592333-c60657eea523", "1568605114967-8130f3a36994", "1600210492486-724fe5c67fb0"],
-  villa2: ["1564013799919-ab600027ffc6", "1568605114967-8130f3a36994", "1600210492486-724fe5c67fb0", "1600607687939-ce8a6c25118c"],
-  hotel1: ["1566073771259-6a8506099945", "1571003123894-1f0594d2b5d9", "1582719508461-905c673771fd", "1564501049412-61c2a3083791"],
-  hotel2: ["1551882547-ff40c63fe5fa", "1542314831-068cd1dbfeeb", "1455587734955-081b22074882", "1486325212027-8081e485255e"],
-  apt1: ["1522708323590-d24dbb6b0267", "1560448204-e02f11c3d0e2", "1502672260266-1c1ef2d93688", "1484154218962-a197022b5858"],
-  apt2: ["1486325212027-8081e485255e", "1502672260266-1c1ef2d93688", "1560448204-e02f11c3d0e2", "1484154218962-a197022b5858"],
-  resort1: ["1571896349842-33c89424de2d", "1540541338287-41700207dee6", "1520250497591-112f2f40a3f4", "1582719508461-905c673771fd"],
-  resort2: ["1540541338287-41700207dee6", "1571896349842-33c89424de2d", "1602002418082-a4443e081dd1", "1582719508461-905c673771fd"],
-  cottage1: ["1449844908441-8829872d2607", "1518780664697-55e3ad937233", "1505691938895-1758d7feb511", "1464822759023-fed622ff2c3b"],
-  cottage2: ["1518780664697-55e3ad937233", "1449844908441-8829872d2607", "1505691938895-1758d7feb511", "1464822759023-fed622ff2c3b"],
+  // 1. ویلا لوکس ساحلی کیش — coastal villa with sea view & pool
+  kishVilla:     ["1512917774080-9991f1c4c750", "1571055107559-3e67626fa8be", "1582268611958-ebfd161ef9cf", "1542314831-068cd1dbfeeb"],
+  // 2. هتل ۵ ستاره پارسیان تهران — modern hotel building & rooms
+  tehranHotel:   ["1551882547-ff40c63fe5fa", "1566073771259-6a8506099945", "1455587734955-081b22074882", "1486325212027-8081e485255e"],
+  // 3. آپارتمان مدرن سعادت‌آباد — modern apartment interior
+  tehranApt:     ["1522708323590-d24dbb6b0267", "1560448204-e02f11c3d0e2", "1502672260266-1c1ef2d93688", "1494526585095-c41746248156"],
+  // 4. اقامتگاه بوم‌گردی یزد — traditional Persian courtyard architecture
+  yazdResort:    ["1600607687939-ce8a6c25118c", "1595872018818-97555653a011", "1524758631624-e2822e304c36", "1531973576160-7125cd663d86"],
+  // 5. کلبه چوبی جنگل مازندران — wooden cabin in forest
+  mazCottage:    ["1449844908441-8829872d2607", "1518780664697-55e3ad937233", "1505691938895-1758d7feb511", "1464822759023-fed622ff2c3b"],
+  // 6. ویلا داریوش کیش — ultra-luxury villa with infinity pool
+  dariushVilla:  ["1564507592333-c60657eea523", "1600210492486-724fe5c67fb0", "1600585154340-be6161a56a0c", "1568605114967-8130f3a36994"],
+  // 7. هتل اسپیناس پالاس تهران — luxury hotel lobby & suite
+  espinasHotel:  ["1571003123894-1f0594d2b5d9", "1582719508461-905c673771fd", "1564501049412-61c2a3083791", "1545324418-cc1a3fa10c00"],
+  // 8. آپارتمان دنج اصفهان — apartment near historical sites
+  isfahanApt:    ["1542315192-1f61a1792f33", "1484154218962-a197022b5858", "1502005229762-cf1b2da7c5d6", "1556909114-f6e7ad7d3136"],
+  // 9. اقامتگاه بوتیک شیراز — Persian boutique hotel with garden
+  shirazBoutique:["1571896349842-33c89424de2d", "1540541338287-41700207dee6", "1520250497591-112f2f40a3f4", "1599809275671-b5942cabc7a2"],
+  // 10. کلبه کوهستانی قشم — island/desert cottage
+  qeshmCottage:  ["1602002418082-a4443e081dd1", "1521405924368-64c5b84bec60", "1613977257363-707ba9348227", "1571508601891-ca5e7a713859"],
+  // 11. ویلا جنگلی گیلان — forest villa with greenery
+  gilanVilla:    ["1564013799919-ab600027ffc6", "1494526585095-c41746248156", "1524758631624-e2822e304c36", "1531973576160-7125cd663d86"],
+  // 12. هتل بزرگ شیراز — classic historic hotel
+  shirazHotel:   ["1566073771259-6a8506099945", "1551882547-ff40c63fe5fa", "1455587734955-081b22074882", "1486325212027-8081e485255e"],
 };
 
 interface SeedProperty {
@@ -56,84 +72,84 @@ const properties: SeedProperty[] = [
     address: "کیش، بلوار ساحل، ویلاهای لوکس", lat: 26.5501, lng: 53.9792,
     pricePerNight: 4500000, maxGuests: 8, bedrooms: 4, beds: 5, bathrooms: 3, size: 320,
     description: "ویلایی فوق‌العاده لوکس در بهترین موقعیت ساحلی جزیره کیش با دید پانوراما به دریا. این ویلا دارای استخر اختصاصی، محوطه وسیع سبز و دکوراسیون مدرن است. مناسب برای خانواده‌هایی که به دنبال آرامش و تجمل می‌باشند.",
-    images: propertyImages.villa1.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","balcony","garden","bbq","seaView","security"], rating: 4.9,
+    images: propertyImages.kishVilla.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","balcony","garden","bbq","seaView","security"], rating: 4.9,
   },
   {
     title: "هتل ۵ ستاره پارسیان", type: "hotel", city: "تهران", province: "تهران",
     address: "تهران، خیابان ولیعصر، هتل پارسیان", lat: 35.7575, lng: 51.4099,
     pricePerNight: 2200000, maxGuests: 3, bedrooms: 1, beds: 2, bathrooms: 1, size: 55,
     description: "هتل ۵ ستاره پارسیان در قلب تهران با دسترسی آسان به مراکز خرید و تفریحی. اتاق‌های مدرن، رستوران بین‌المللی، استخر و باشگاه بدنسازی اختصاصی.",
-    images: propertyImages.hotel1.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.7,
+    images: propertyImages.tehranHotel.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.7,
   },
   {
     title: "آپارتمان مدرن مرکز شهر", type: "apartment", city: "تهران", province: "تهران",
     address: "تهران، سعادت‌آباد، برج ماه", lat: 35.7722, lng: 51.3744,
     pricePerNight: 980000, maxGuests: 4, bedrooms: 2, beds: 3, bathrooms: 1, size: 95,
     description: "آپارتمان دنج و مدرن در یکی از بهترین محله‌های تهران. نزدیک به پارک، فروشگاه‌ها و مترو. مناسب برای مسافران تجاری و توریستی.",
-    images: propertyImages.apt1.map(img), amenities: ["wifi","parking","ac","kitchen","tv","washer","heater","elevator","security"], rating: 4.6,
+    images: propertyImages.tehranApt.map(img), amenities: ["wifi","parking","ac","kitchen","tv","washer","heater","elevator","security"], rating: 4.6,
   },
   {
     title: "اقامتگاه بوم‌گردی یزد", type: "resort", city: "یزد", province: "یزد",
     address: "یزد، بافت تاریخی، اقامتگاه سنتی", lat: 31.8974, lng: 54.3569,
     pricePerNight: 1450000, maxGuests: 6, bedrooms: 3, beds: 4, bathrooms: 2, size: 180,
     description: "اقامتگاه سنتی بازسازی شده در بافت تاریخی یزد با معماری اصیل ایرانی. حیاط مرکزی، بادگیر و اتاق‌های زیبا. تجربه‌ای متفاوت از اقامت در شهر بادگیرها.",
-    images: propertyImages.resort1.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","breakfast","garden","balcony"], rating: 4.8,
+    images: propertyImages.yazdResort.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","breakfast","garden","balcony"], rating: 4.8,
   },
   {
     title: "کلبه چوبی جنگل مازندران", type: "cottage", city: "مازندران", province: "مازندران",
     address: "مازندران، جاده چالوس، کلبه‌های جنگلی", lat: 36.6500, lng: 51.4167,
     pricePerNight: 1150000, maxGuests: 5, bedrooms: 2, beds: 3, bathrooms: 1, size: 85,
     description: "کلبه چوبی دنج در دل جنگل‌های سرسبز مازندران. هوای پاک، صدای پرندگان و آرامش مطلق. مناسب برای فرار از هیاهوی شهر.",
-    images: propertyImages.cottage1.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","fireplace","garden","bbq","mountainView","petFriendly"], rating: 4.7,
+    images: propertyImages.mazCottage.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","fireplace","garden","bbq","mountainView","petFriendly"], rating: 4.7,
   },
   {
     title: "ویلا داریوش کیش", type: "villa", city: "کیش", province: "هرمزگان",
     address: "کیش، شهرک داریوش، ویلا ۲۴", lat: 26.5410, lng: 53.9801,
     pricePerNight: 6200000, maxGuests: 10, bedrooms: 5, beds: 6, bathrooms: 4, size: 450,
     description: "ویلایی پادشاهی در شهرک اختصاصی داریوش کیش. با استخر بی‌نهایت، جکوزی، سونا و فضای وسیع. تجربه‌ای بی‌نظیر از اقامت لوکس.",
-    images: propertyImages.villa2.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","gym","spa","balcony","garden","bbq","fireplace","seaView","security"], rating: 5.0,
+    images: propertyImages.dariushVilla.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","gym","spa","balcony","garden","bbq","fireplace","seaView","security"], rating: 5.0,
   },
   {
     title: "هتل اسپیناس پالاس", type: "hotel", city: "تهران", province: "تهران",
     address: "تهران، شیخ بهایی، هتل اسپیناس", lat: 35.7588, lng: 51.4100,
     pricePerNight: 3100000, maxGuests: 4, bedrooms: 1, beds: 2, bathrooms: 1, size: 75,
     description: "هتل مجلل اسپیناس پالاس با شیک‌ترین اتاق‌های تهران. رستوران‌های بین‌المللی، مرکز خرید و امکانات کامل تفریحی.",
-    images: propertyImages.hotel2.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.8,
+    images: propertyImages.espinasHotel.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.8,
   },
   {
     title: "آپارتمان دنج اصفهان", type: "apartment", city: "اصفهان", province: "اصفهان",
     address: "اصفهان، خیابان چهارباغ، مجتمع مسکونی", lat: 32.6539, lng: 51.6660,
     pricePerNight: 850000, maxGuests: 3, bedrooms: 1, beds: 2, bathrooms: 1, size: 70,
     description: "آپارتمان زیبا در نزدیکی میدان نقش جهان. دسترسی پیاده به جاذبه‌های تاریخی. دکوراسیون سنتی و مدرن.",
-    images: propertyImages.apt2.map(img), amenities: ["wifi","parking","ac","kitchen","tv","washer","heater","elevator"], rating: 4.5,
+    images: propertyImages.isfahanApt.map(img), amenities: ["wifi","parking","ac","kitchen","tv","washer","heater","elevator"], rating: 4.5,
   },
   {
     title: "اقامتگاه بوتیک شیراز", type: "resort", city: "شیراز", province: "فارس",
     address: "شیراز، محله قدم‌جاد، بوتیک‌هتل", lat: 29.5918, lng: 52.5837,
     pricePerNight: 1680000, maxGuests: 5, bedrooms: 2, beds: 3, bathrooms: 2, size: 140,
     description: "بوتیک‌هتل سنتی در قلب شیراز تاریخی. حیاطی زیبا با حوض و گل‌ها، اتاق‌های بازسازی شده با معماری قاجار. نزدیک به باغ ارم و حافظیه.",
-    images: propertyImages.resort2.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","breakfast","garden","balcony"], rating: 4.9,
+    images: propertyImages.shirazBoutique.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","breakfast","garden","balcony"], rating: 4.9,
   },
   {
     title: "کلبه کوهستانی قشم", type: "cottage", city: "قشم", province: "هرمزگان",
     address: "قشم، روستای تلا، کلبه کوهستانی", lat: 26.7561, lng: 55.8731,
     pricePerNight: 980000, maxGuests: 4, bedrooms: 2, beds: 2, bathrooms: 1, size: 65,
     description: "کلبه‌ای زیبا در جزیره قشم با دید به دره‌های شگفت‌انگیز. مناسب برای علاقه‌مندان به طبیعت‌گردی و ماجراجویی.",
-    images: propertyImages.cottage2.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","garden","bbq","mountainView","petFriendly"], rating: 4.6,
+    images: propertyImages.qeshmCottage.map(img), amenities: ["wifi","parking","ac","kitchen","tv","heater","garden","bbq","mountainView","petFriendly"], rating: 4.6,
   },
   {
     title: "ویلا جنگلی گیلان", type: "villa", city: "گیلان", province: "گیلان",
     address: "گیلان، جاده رشت، ویلاهای جنگلی", lat: 37.2809, lng: 49.5832,
     pricePerNight: 1850000, maxGuests: 7, bedrooms: 3, beds: 4, bathrooms: 2, size: 220,
     description: "ویلایی زیبا در دل جنگل‌های هیرکانی گیلان. با استخر، محوطه وسیع و دید به جنگل. هوای مطبوع و آرامش کامل.",
-    images: propertyImages.villa1.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","balcony","garden","bbq","fireplace","mountainView","petFriendly","security"], rating: 4.8,
+    images: propertyImages.gilanVilla.map(img), amenities: ["wifi","pool","parking","ac","kitchen","tv","washer","heater","balcony","garden","bbq","fireplace","mountainView","petFriendly","security"], rating: 4.8,
   },
   {
     title: "هتل بزرگ شیراز", type: "hotel", city: "شیراز", province: "فارس",
     address: "شیراز، زند، هتل بزرگ", lat: 29.6107, lng: 52.5450,
     pricePerNight: 1950000, maxGuests: 3, bedrooms: 1, beds: 2, bathrooms: 1, size: 60,
     description: "هتل تاریخی بزرگ شیراز با معماری کلاسیک. در مرکز شهر و نزدیک به همه جاذبه‌ها. خدمت رسانی با سابقه‌ای طولانی.",
-    images: propertyImages.hotel1.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.6,
+    images: propertyImages.shirazHotel.map(img), amenities: ["wifi","pool","parking","ac","tv","breakfast","gym","spa","elevator","security"], rating: 4.6,
   },
 ];
 

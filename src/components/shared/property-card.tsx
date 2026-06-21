@@ -10,6 +10,7 @@ import { propertyTypeMeta } from "@/config/site";
 import {
   formatTomanCompact, pricePerNightLabel, toPersianDigits, pluralFa,
 } from "@/lib/persian";
+import { cardImage, SHIMMER_BLUR } from "@/lib/image";
 import type { Property } from "@/types";
 import { toast } from "sonner";
 
@@ -53,10 +54,13 @@ export function PropertyCard({
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Image
-          src={property.images[0]}
+          src={cardImage(property.images[0])}
           alt={property.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL={SHIMMER_BLUR}
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />

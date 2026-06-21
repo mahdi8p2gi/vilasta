@@ -14,6 +14,9 @@ export type AppView =
   | "dashboard-user"
   | "dashboard-host"
   | "dashboard-admin"
+  | "destinations"
+  | "experiences"
+  | "host-intro"
   | "auth";
 
 export type DashboardTab =

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, MapPin, TrendingUp, Clock, ArrowLeft } from "lucide-react";
 import {
-  Dialog, DialogContent,
+  Dialog, DialogContent, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useAppStore } from "@/store/app-store";
@@ -56,6 +56,10 @@ export function SearchModal() {
   return (
     <Dialog open={searchModalOpen} onOpenChange={setSearchModal}>
       <DialogContent className="max-w-2xl overflow-hidden p-0 gap-0">
+        <DialogTitle className="sr-only">جستجوی مقصد و اقامتگاه</DialogTitle>
+        <DialogDescription className="sr-only">
+          مقصد، عنوان یا شهر مورد نظر خود را جستجو کنید
+        </DialogDescription>
         {/* Search input */}
         <div className="border-b border-border p-4">
           <div className="flex items-center gap-3 rounded-xl bg-muted px-4 py-3">
@@ -91,7 +95,7 @@ export function SearchModal() {
                     className="flex w-full items-center gap-3 rounded-xl p-2 text-right transition-colors hover:bg-accent"
                   >
                     <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
-                      <img src={p.images[0]} alt={p.title} className="h-full w-full object-cover" />
+                      <img src={p.images[0]} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{p.title}</p>
@@ -177,7 +181,7 @@ export function SearchModal() {
                       onClick={() => { setSearch({ city: d.name }); setSearchModal(false); setView("listing"); }}
                       className="flex items-center gap-2 rounded-xl border border-border p-2 text-right hover:bg-accent"
                     >
-                      <img src={d.image} alt={d.name} className="h-10 w-10 rounded-lg object-cover" />
+                      <img src={d.image} alt={d.name} className="h-10 w-10 rounded-lg object-cover" loading="lazy" />
                       <div>
                         <p className="text-sm font-medium">{d.name}</p>
                         <p className="text-xs text-muted-foreground">{toPersianDigits(d.propertyCount)} اقامتگاه</p>

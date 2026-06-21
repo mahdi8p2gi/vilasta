@@ -53,7 +53,7 @@ export function Navbar() {
             {navItems.map((item) => (
               <button
                 key={item.view}
-                onClick={() => setView(item.view === "destinations" || item.view === "experiences" || item.view === "host-intro" ? "listing" : item.view)}
+                onClick={() => setView(item.view)}
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
                   view === item.view && "bg-accent text-accent-foreground"
@@ -191,7 +191,7 @@ export function Navbar() {
                   <button
                     key={item.view}
                     onClick={() => {
-                      setView(item.view === "destinations" || item.view === "experiences" || item.view === "host-intro" ? "listing" : item.view);
+                      setView(item.view);
                       setMobileMenu(false);
                     }}
                     className={cn(

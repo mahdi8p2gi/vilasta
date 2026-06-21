@@ -8,6 +8,7 @@ import { useAppStore } from "@/store/app-store";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toPersianDigits } from "@/lib/persian";
+import { cardImage, SHIMMER_BLUR } from "@/lib/image";
 
 export function PopularDestinations() {
   const { data, isLoading } = useDestinations();
@@ -40,10 +41,13 @@ export function PopularDestinations() {
               {dest ? (
                 <>
                   <Image
-                    src={dest.image}
+                    src={cardImage(dest.image)}
                     alt={dest.name}
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={SHIMMER_BLUR}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
