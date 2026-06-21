@@ -52,7 +52,7 @@ export function PropertyCard({
       className="group cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:border-primary/30"
     >
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <div className="img-shine relative aspect-[4/3] overflow-hidden bg-muted">
         <Image
           src={cardImage(property.images[0])}
           alt={property.title}

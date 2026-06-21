@@ -13,11 +13,11 @@ const categories = [
 
 const destinations = [
   { name: "کیش", province: "هرمزگان", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80" },
-  { name: "تهران", province: "تهران", image: "https://images.unsplash.com/photo-1455587734955-081b22074882?w=800&q=80" },
+  { name: "تهران", province: "تهران", image: "https://images.unsplash.com/photo-1565374395542-0ce18882c857?w=800&q=80" },
   { name: "اصفهان", province: "اصفهان", image: "https://images.unsplash.com/photo-1542315192-1f61a1792f33?w=800&q=80" },
-  { name: "شیراز", province: "فارس", image: "https://images.unsplash.com/photo-1595872018818-97555653a011?w=800&q=80" },
-  { name: "یزد", province: "یزد", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" },
-  { name: "قشم", province: "هرمزگان", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80" },
+  { name: "شیراز", province: "فارس", image: "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=800&q=80" },
+  { name: "یزد", province: "یزد", image: "https://images.unsplash.com/photo-1513415564515-763d91423bdd?w=800&q=80" },
+  { name: "قشم", province: "هرمزگان", image: "https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?w=800&q=80" },
   { name: "مازندران", province: "مازندران", image: "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?w=800&q=80" },
   { name: "گیلان", province: "گیلان", image: "https://images.unsplash.com/photo-1469041797191-50ace28483c3?w=800&q=80" },
 ];

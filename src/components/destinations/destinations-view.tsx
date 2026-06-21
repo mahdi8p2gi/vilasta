@@ -20,19 +20,19 @@ const featuredInsights = [
   {
     title: "کیش، جزیره آرامش",
     desc: "سواحل زرین، ویلاهای لوکس و آب‌های فیروزه‌ای. مقصدی برای استراحت و تفریح.",
-    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
     tag: "ساحلی",
   },
   {
-    title: "یزد، شهر بادگیرها",
-    desc: "معماری خشتی، کویر ساحران و اقامتگاه‌های بوم‌گردی اصیل. سفری در تاریخ.",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+    title: "اصفهان، نصف جهان",
+    desc: "میدان نقش جهان، سی‌وسه‌پل و مساجد فیروزه‌ای. شهری از شکوه و هنر صفوی.",
+    image: "https://images.unsplash.com/photo-1595872018818-97555653a011",
     tag: "تاریخی",
   },
   {
     title: "گیلان، سرسبزی همیشگی",
     desc: "جنگل‌های هیرکانی، ویلاهای جنگلی و غذاهای محلی. بهشتی در شمال ایران.",
-    image: "https://images.unsplash.com/photo-1469041797191-50ace28483c3",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef",
     tag: "جنگلی",
   },
 ];
@@ -94,7 +94,7 @@ export function DestinationsView() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-border/60 shadow-sm transition-all hover:shadow-card-hover"
+              className="img-shine group relative aspect-[4/5] overflow-hidden rounded-3xl border border-border/60 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
             >
               <Image
                 src={cardImage(ins.image)}
@@ -143,7 +143,7 @@ export function DestinationsView() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05, duration: 0.4 }}
                   onClick={() => dest && onSelectCity(dest.name)}
-                  className={`group relative aspect-square overflow-hidden rounded-2xl border shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover ${
+                  className={`img-shine group relative aspect-square overflow-hidden rounded-2xl border shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover ${
                     active ? "border-primary ring-2 ring-primary/40" : "border-border/60"
                   }`}
                 >

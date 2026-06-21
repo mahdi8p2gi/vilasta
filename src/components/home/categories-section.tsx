@@ -38,7 +38,7 @@ export function CategoriesSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.06, duration: 0.4 }}
               onClick={() => cat && onSelect(cat.slug)}
-              className="group relative aspect-square overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="img-shine group relative aspect-square overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
             >
               {cat ? (
                 <>

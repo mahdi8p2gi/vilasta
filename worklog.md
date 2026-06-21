@@ -229,3 +229,46 @@ Stage Summary:
 - Back-to-top button functional (bottom-left, appears on scroll)
 - Close icons in Sheet/Dialog/Search modal all now on the LEFT side (RTL correct)
 - Booking flow re-verified end-to-end (login → property → book → pay → confirmation 201)
+
+---
+Task ID: 13
+Agent: Main (orchestrator)
+Task: Fix destinations images, add image hover animations, fix text visibility, redesign hamburger menu, fix close btn+logo alignment
+
+Work Log:
+- Updated all 8 destination seed images with distinct, city-relevant photos:
+  • کیش → island/beach, تهران → cityscape, اصفهان → Persian architecture
+  • شیراز → Persepolis, یزد → desert/adobe, قشم → canyon (was duplicate of کیش, now unique)
+  • مازندران → forest, گیلان → forest/field
+- Updated 3 featuredInsights in DestinationsView with distinct images (Kish beach, Isfahan architecture, Gilan forest)
+- Re-seeded database with new images
+- Added CSS image hover animation utilities in globals.css:
+  • .img-shine — diagonal shine sweep effect on hover (0.8s)
+  • .img-hover-zoom — smooth 1.12x zoom (0.7s cubic-bezier)
+  • .img-hover-lift — translateY(-6px) lift effect
+  • .img-hover-reveal — gradient overlay reveal
+- Applied .img-shine to: PropertyCard, CategoriesSection, PopularDestinations, DestinationsView (featured + grid), ExperiencesView cards — 25+ elements total
+- Fixed text visibility in light & dark mode:
+  • Light: --emerald-brand darkened (0.55→0.45), --gold darkened (0.78→0.72), --muted-foreground darkened (0.52→0.46), --gold-foreground adjusted (0.28→0.32)
+  • Dark: --emerald-brand brightened (0.60→0.68), --gold brightened (0.80→0.82), --muted-foreground brightened (0.70→0.74), --gold-foreground brightened (0.20→0.85)
+- Replaced blue/cyan/purple colors in ExperiencesView categories with emerald/teal/amber/gold palette (no blue/indigo)
+- Redesigned mobile hamburger menu (Sheet):
+  • Added showCloseButton prop to Sheet component
+  • Custom header: logo + close button in same flex row (justify-between)
+  • Animated nav items: spring animation with stagger (opacity + x slide)
+  • Active item: gradient highlight + right border + dot indicator
+  • Hover: bg-accent + padding shift + dot scale
+  • Animated hamburger icon: morphs Menu↔X with rotation
+  • Bottom section: login/register or dashboard button + phone contact
+- Redesigned search modal header:
+  • showCloseButton={false} on DialogContent
+  • Custom header row: search input (flex-1) + close button (shrink-0) in same flex row
+- Lint passes clean, no console errors
+
+Stage Summary:
+- All destinations images now relevant and distinct per city (no repeats)
+- Smooth shine sweep + zoom hover animations on all image cards across the site
+- Text contrast improved in both light and dark modes (emerald, gold, muted-foreground all adjusted)
+- Mobile menu completely redesigned with animated nav items, logo+close in same row, morphing hamburger icon
+- Search modal: input + close button in same row
+- Verified: 25 shine elements on home, mobile menu logo+close sameRow=true, search input+close sameRow=true

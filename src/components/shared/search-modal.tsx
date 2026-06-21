@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, MapPin, TrendingUp, Clock, ArrowLeft } from "lucide-react";
 import {
-  Dialog, DialogContent, DialogTitle, DialogDescription,
+  Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppStore } from "@/store/app-store";
 import { useDestinations } from "@/hooks/use-api";
@@ -55,15 +56,15 @@ export function SearchModal() {
 
   return (
     <Dialog open={searchModalOpen} onOpenChange={setSearchModal}>
-      <DialogContent className="max-w-2xl overflow-hidden p-0 gap-0">
+      <DialogContent showCloseButton={false} className="max-w-2xl overflow-hidden p-0 gap-0">
         <DialogTitle className="sr-only">جستجوی مقصد و اقامتگاه</DialogTitle>
         <DialogDescription className="sr-only">
           مقصد، عنوان یا شهر مورد نظر خود را جستجو کنید
         </DialogDescription>
-        {/* Search input */}
-        <div className="border-b border-border p-4">
-          <div className="flex items-center gap-3 rounded-xl bg-muted px-4 py-3">
-            <Search className="h-5 w-5 text-muted-foreground" />
+        {/* Search input + close button in same row */}
+        <div className="flex items-center gap-3 border-b border-border p-4">
+          <div className="flex flex-1 items-center gap-3 rounded-xl bg-muted px-4 py-3">
+            <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
             <input
               ref={inputRef}
               value={q}
@@ -73,11 +74,16 @@ export function SearchModal() {
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             />
             {q && (
-              <button onClick={() => setQ("")} className="text-muted-foreground hover:text-foreground">
+              <button onClick={() => setQ("")} className="text-muted-foreground hover:text-foreground shrink-0">
                 <X className="h-4 w-4" />
               </button>
             )}
           </div>
+          <DialogClose asChild>
+            <Button variant="ghost" size="icon" className="shrink-0 rounded-full hover:bg-accent" aria-label="بستن">
+              <X className="h-5 w-5" />
+            </Button>
+          </DialogClose>
         </div>
 
         <div className="max-h-[60vh] overflow-y-auto scrollbar-thin p-4">

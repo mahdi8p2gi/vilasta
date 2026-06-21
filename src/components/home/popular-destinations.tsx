@@ -36,7 +36,7 @@ export function PopularDestinations() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, duration: 0.4 }}
               onClick={() => dest && onSelect(dest.name)}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="img-shine group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
             >
               {dest ? (
                 <>

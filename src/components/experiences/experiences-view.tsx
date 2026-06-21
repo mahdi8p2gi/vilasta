@@ -103,12 +103,12 @@ const experiences = [
 ];
 
 const categories = [
-  { icon: Waves, label: "آبی", color: "from-cyan-500/20 to-blue-500/5" },
-  { icon: Mountain, label: "کوهستان", color: "from-emerald-500/20 to-teal-500/5" },
-  { icon: Utensils, label: "غذایی", color: "from-amber-500/20 to-orange-500/5" },
-  { icon: Camera, label: "فرهنگی", color: "from-purple-500/20 to-pink-500/5" },
+  { icon: Waves, label: "آبی", color: "from-teal-500/20 to-emerald-500/5" },
+  { icon: Mountain, label: "کوهستان", color: "from-emerald-500/20 to-green-500/5" },
+  { icon: Utensils, label: "غذایی", color: "from-amber-500/20 to-yellow-500/5" },
+  { icon: Camera, label: "فرهنگی", color: "from-rose-500/20 to-amber-500/5" },
   { icon: Compass, label: "کویر", color: "from-yellow-500/20 to-amber-500/5" },
-  { icon: Sparkles, label: "طبیعت", color: "from-green-500/20 to-emerald-500/5" },
+  { icon: Sparkles, label: "طبیعت", color: "from-green-500/20 to-teal-500/5" },
 ];
 
 export function ExperiencesView() {
@@ -176,7 +176,7 @@ export function ExperiencesView() {
               transition={{ delay: Math.min(i * 0.07, 0.4), duration: 0.5 }}
               className="group cursor-pointer overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
             >
-              <div className="relative aspect-[5/4] overflow-hidden bg-muted">
+              <div className="img-shine relative aspect-[5/4] overflow-hidden bg-muted">
                 <Image
                   src={cardImage(exp.image)}
                   alt={exp.title}
