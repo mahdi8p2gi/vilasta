@@ -38,7 +38,7 @@ export function CategoriesSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.06, duration: 0.4 }}
               onClick={() => cat && onSelect(cat.slug)}
-              className="img-shine group relative aspect-square overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="img-shine group relative aspect-square overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all duration-1000 ease-out hover:-translate-y-2 hover:shadow-card-hover"
             >
               {cat ? (
                 <>
@@ -50,7 +50,7 @@ export function CategoriesSection() {
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL={SHIMMER_BLUR}
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="absolute inset-0 flex flex-col items-center justify-end p-4 text-center">

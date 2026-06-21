@@ -325,7 +325,8 @@
 }
 
 /* ---------- Theme transition ---------- */
-.theme-transition,
-.theme-transition * {
-  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.3s ease;
+/* Theme switching is instant via next-themes disableTransitionOnChange.
+   This class is opt-in for elements that want a subtle color transition. */
+.theme-transition {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }

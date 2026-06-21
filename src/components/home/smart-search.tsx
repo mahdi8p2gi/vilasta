@@ -62,28 +62,28 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
       className={cn(
         "relative w-full",
         isHero
-          ? "rounded-[28px] border border-white/20 bg-white/10 p-2.5 shadow-2xl backdrop-blur-2xl"
+          ? "rounded-3xl border border-border/50 bg-card/95 p-2 shadow-2xl shadow-black/20 backdrop-blur-xl"
           : "rounded-2xl border border-border bg-card p-2 shadow-luxury"
       )}
     >
       {/* Inner container with segments */}
-      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[1.3fr_1.5fr_1.1fr_auto] sm:gap-0">
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-[1.3fr_1.5fr_1.1fr_auto] sm:gap-0">
         {/* Destination */}
         <Popover open={cityOpen} onOpenChange={setCityOpen}>
           <PopoverTrigger asChild>
             <button
               className={cn(
                 "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300",
-                isHero ? "hover:bg-white/15" : "hover:bg-accent",
-                cityOpen && (isHero ? "bg-white/15" : "bg-accent")
+                "hover:bg-accent",
+                cityOpen && "bg-accent"
               )}
             >
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5 text-emerald-brand" />
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-brand">
+                <MapPin className="h-3.5 w-3.5" />
                 مقصد
               </span>
               <span className="flex items-center gap-1.5">
-                <span className={cn("text-sm font-bold", !search.city && "font-normal text-muted-foreground/70")}>
+                <span className={cn("text-sm font-bold text-foreground", !search.city && "font-normal text-muted-foreground")}>
                   {search.city || "کجا می‌روید؟"}
                 </span>
                 <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-300", cityOpen && "rotate-180")} />
@@ -127,17 +127,17 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
           <PopoverTrigger asChild>
             <button
               className={cn(
-                "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300 sm:border-x",
-                isHero ? "hover:bg-white/15 sm:border-white/15" : "hover:bg-accent sm:border-border/60",
-                dateOpen && (isHero ? "bg-white/15" : "bg-accent")
+                "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300 sm:border-x sm:border-border/60",
+                "hover:bg-accent",
+                dateOpen && "bg-accent"
               )}
             >
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                <CalendarDays className="h-3.5 w-3.5 text-emerald-brand" />
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-brand">
+                <CalendarDays className="h-3.5 w-3.5" />
                 تاریخ سفر
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold text-foreground">
                   {dateRange?.from
                     ? `${formatJalaliShort(dateRange.from)}${dateRange?.to ? ` — ${formatJalaliShort(dateRange.to)}` : ""}`
                     : "انتخاب تاریخ"}
@@ -164,16 +164,16 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
             <button
               className={cn(
                 "group flex flex-col items-start gap-1 rounded-2xl px-4 py-3 text-right transition-all duration-300",
-                isHero ? "hover:bg-white/15" : "hover:bg-accent",
-                guestOpen && (isHero ? "bg-white/15" : "bg-accent")
+                "hover:bg-accent",
+                guestOpen && "bg-accent"
               )}
             >
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                <Users className="h-3.5 w-3.5 text-emerald-brand" />
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-brand">
+                <Users className="h-3.5 w-3.5" />
                 مسافران
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold text-foreground">
                   {toPersianDigits(guests)} نفر
                 </span>
                 <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-300", guestOpen && "rotate-180")} />
@@ -216,11 +216,11 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
           <Button
             onClick={onSearch}
             size="lg"
-            className="group relative h-full w-full min-w-[120px] gap-2 overflow-hidden rounded-2xl bg-gradient-to-l from-primary via-emerald-brand to-primary bg-[length:200%_100%] text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-500 hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/40"
+            className="group relative h-full w-full min-w-[120px] gap-2 overflow-hidden rounded-2xl bg-gradient-to-l from-primary to-emerald-brand text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/40"
           >
             <Search className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
             <span className="font-bold">جستجو</span>
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
           </Button>
         </div>
       </div>
@@ -235,12 +235,12 @@ export function SmartSearch({ variant = "hero" }: { variant?: "hero" | "inline" 
             className="overflow-hidden"
           >
             <div className="flex items-center gap-2 px-3 pb-2 pt-1">
-              <Badge variant="outline" className="gap-1.5 border-white/20 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur">
+              <Badge variant="outline" className="gap-1.5 border-emerald-brand/30 bg-emerald-brand/10 px-3 py-1 text-xs text-emerald-brand">
                 <Sparkles className="h-3 w-3 text-gold" />
                 {toPersianDigits(nights)} شب اقامت
               </Badge>
               {search.city && (
-                <Badge variant="outline" className="gap-1.5 border-white/20 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur">
+                <Badge variant="outline" className="gap-1.5 border-gold/30 bg-gold/10 px-3 py-1 text-xs text-gold-foreground">
                   <MapPin className="h-3 w-3 text-gold" />
                   {search.city}
                 </Badge>

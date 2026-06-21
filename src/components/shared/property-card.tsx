@@ -49,7 +49,7 @@ export function PropertyCard({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
       onClick={() => goProperty(property.id)}
-      className="group cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-700 ease-out hover:-translate-y-2 hover:shadow-card-hover hover:border-primary/40"
+      className="group cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-1000 ease-out hover:-translate-y-3 hover:shadow-card-hover hover:border-primary/40"
     >
       {/* Image */}
       <div className="img-shine relative aspect-[4/3] overflow-hidden bg-muted">
@@ -61,7 +61,7 @@ export function PropertyCard({
           loading="lazy"
           placeholder="blur"
           blurDataURL={SHIMMER_BLUR}
-          className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+          className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
 

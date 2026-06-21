@@ -299,3 +299,27 @@ Stage Summary:
 - City images: Isfahan/Yazd/Qeshm now show actual city landmarks (OSS-hosted, verified)
 - Email updated, year updated to ۱۴۰۵
 - Modern README created with full documentation
+
+---
+Task ID: 15
+Agent: Main (orchestrator)
+Task: Redesign footer, slow image hover, navbar scroll animation, fix theme transition, redesign hero search
+
+Work Log:
+- Redesigned footer: 2-row layout (brand+newsletter top, 4 link groups bottom), contact items in 3-col grid with icon badges, animated entrance, social buttons with border hover, newsletter card with distinct bg, copyright with "built with love", fully responsive (2-col on mobile, 4-col on desktop, no horizontal scroll)
+- Slowed image hover animations across ALL card components:
+  • PropertyCard: card duration-700→1000ms, image 1200ms→1800ms, lift -y-2→-y-3
+  • CategoriesSection: duration-500→1000ms + image 500ms→1800ms, lift -y-1→-y-2
+  • PopularDestinations: duration-700→1000ms + image 700ms→1800ms, lift -y-1→-y-2
+  • DestinationsView (featured + grid): duration-700→1000ms + image 500/700ms→1800ms, lift -y-1→-y-2
+  • ExperiencesView: duration-300→1000ms + image 700ms→1800ms, lift -y-1→-y-2
+- Redesigned navbar: removed glassmorphism, added motion.header with entrance animation (y:-80→0), scroll animation with transition-[background-color,border-color,box-shadow,padding] duration-500, scrolled state = bg-background/95 + shadow + backdrop-blur-md + py-1, unscrolled = transparent + py-2
+- Fixed theme transition: enabled disableTransitionOnChange in ThemeProvider (was false), removed theme-transition class from body, made theme switch instant (no more slow color transitions)
+- Redesigned hero search bar: bg-white/10→bg-card/95 (solid, readable in light mode), labels text-emerald-brand, values text-foreground, removed glassmorphism, nights badge uses emerald/gold tinted backgrounds, modern clean look
+
+Stage Summary:
+- Footer: 2-row responsive layout, 3 contact cards, animated entrance, no horizontal scroll on mobile
+- Image hover: 1s card transition + 1.8s image zoom + -y-3 lift (very slow, cinematic)
+- Navbar: no glassmorphism, motion entrance, smooth scroll animation (transparent→solid bg)
+- Theme toggle: instant switch (disableTransitionOnChange), no slow transitions
+- Search bar: solid bg-card/95 background, emerald labels, foreground values — readable in both light and dark modes

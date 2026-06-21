@@ -174,7 +174,7 @@ export function ExperiencesView() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: Math.min(i * 0.07, 0.4), duration: 0.5 }}
-              className="group cursor-pointer overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+              className="group cursor-pointer overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-1000 ease-out hover:-translate-y-2 hover:shadow-card-hover"
             >
               <div className="img-shine relative aspect-[5/4] overflow-hidden bg-muted">
                 <Image
@@ -185,7 +185,7 @@ export function ExperiencesView() {
                   loading="lazy"
                   placeholder="blur"
                   blurDataURL={SHIMMER_BLUR}
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
                 <Badge className="absolute right-3 top-3 glass border-white/20 text-white">

@@ -26,7 +26,7 @@ export function Navbar() {
   const { view, setView, user, logout, openAuth, goDashboard, setMobileMenu, mobileMenuOpen, setSearchModal } = useAppStore();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -37,12 +37,15 @@ export function Navbar() {
     : "؟";
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full transition-[background-color,border-color,box-shadow,padding] duration-500 ease-out",
         scrolled
-          ? "glass border-b border-border/60 shadow-sm"
-          : "bg-transparent"
+          ? "border-b border-border/60 bg-background/95 shadow-md shadow-black/5 backdrop-blur-md py-1"
+          : "border-b border-transparent bg-transparent py-2"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -251,6 +254,6 @@ export function Navbar() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

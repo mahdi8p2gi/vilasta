@@ -36,7 +36,7 @@ export function PopularDestinations() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, duration: 0.4 }}
               onClick={() => dest && onSelect(dest.name)}
-              className="img-shine group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="img-shine group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all duration-1000 ease-out hover:-translate-y-2 hover:shadow-card-hover"
             >
               {dest ? (
                 <>
@@ -48,7 +48,7 @@ export function PopularDestinations() {
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL={SHIMMER_BLUR}
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                   <div className="absolute bottom-0 right-0 left-0 p-4 text-white">

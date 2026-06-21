@@ -94,7 +94,7 @@ export function DestinationsView() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="img-shine group relative aspect-[4/5] overflow-hidden rounded-3xl border border-border/60 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="img-shine group relative aspect-[4/5] overflow-hidden rounded-3xl border border-border/60 shadow-sm transition-all duration-1000 ease-out hover:-translate-y-2 hover:shadow-card-hover"
             >
               <Image
                 src={cardImage(ins.image)}
@@ -104,7 +104,7 @@ export function DestinationsView() {
                 loading="lazy"
                 placeholder="blur"
                 blurDataURL={SHIMMER_BLUR}
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
               <div className="absolute right-4 top-4">
@@ -143,7 +143,7 @@ export function DestinationsView() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05, duration: 0.4 }}
                   onClick={() => dest && onSelectCity(dest.name)}
-                  className={`img-shine group relative aspect-square overflow-hidden rounded-2xl border shadow-sm transition-all hover:-translate-y-1 hover:shadow-card-hover ${
+                  className={`img-shine group relative aspect-square overflow-hidden rounded-2xl border shadow-sm transition-all duration-1000 ease-out hover:-translate-y-2 hover:shadow-card-hover ${
                     active ? "border-primary ring-2 ring-primary/40" : "border-border/60"
                   }`}
                 >
@@ -157,7 +157,7 @@ export function DestinationsView() {
                         loading="lazy"
                         placeholder="blur"
                         blurDataURL={SHIMMER_BLUR}
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-0 right-0 left-0 p-4 text-white">
