@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type {
   Property, Destination, Category, Review, Booking, Notification, Paginated, PropertyFilters,
 } from "@/types";
@@ -9,6 +9,35 @@ async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   return res.json();
+}
+
+async function postJson<T>(url: string, body: any): Promise<T> {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `Request failed: ${res.status}`);
+  return data;
+}
+
+async function patchJson<T>(url: string, body?: any): Promise<T> {
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `Request failed: ${res.status}`);
+  return data;
+}
+
+async function deleteJson<T>(url: string): Promise<T> {
+  const res = await fetch(url, { method: "DELETE" });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `Request failed: ${res.status}`);
+  return data;
 }
 
 export function useFeaturedProperties() {
@@ -118,3 +147,88 @@ export function useAdminAnalytics() {
     queryFn: () => fetchJson<any>(`/api/analytics/admin`),
   });
 }
+
+// ============================================================================
+//  Mutation hooks
+// ============================================================================
+
+/** Submit a review for a property */
+export function useSubmitReview() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ propertyId, ...data }: any) =>
+      postJson(`/api/properties/${propertyId}/reviews/submit`, data),
+    onSuccess: (_data, vars) => {
+      qc.invalidateQueries({ queryKey: ["property", vars.propertyId] });
+      qc.invalidateQueries({ queryKey: ["property", vars.propertyId, "reviews"] });
+    },
+  });
+}
+
+/** Delete a property (host or admin) */
+export function useDeleteProperty() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteJson(`/api/properties/${id}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["properties"] });
+      qc.invalidateQueries({ queryKey: ["analytics"] });
+    },
+  });
+}
+
+/** Update property status (admin: approve/suspend) */
+export function useUpdatePropertyStatus() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, status }: { id: string; status: string }) =>
+      patchJson(`/api/properties/${id}/status`, { status }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["analytics", "admin"] });
+      qc.invalidateQueries({ queryKey: ["properties"] });
+    },
+  });
+}
+
+/** Delete a review (admin) */
+export function useDeleteReview() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteJson(`/api/reviews/${id}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["analytics", "admin"] });
+    },
+  });
+}
+
+/** Mark all notifications as read */
+export function useMarkAllNotificationsRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId: string) => patchJson(`/api/notifications/read-all?userId=${userId}`),
+    onSuccess: (_data, userId) => {
+      qc.invalidateQueries({ queryKey: ["notifications", userId] });
+    },
+  });
+}
+
+/** Update user role (admin) */
+export function useUpdateUserRole() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, role }: { id: string; role: string }) =>
+      patchJson(`/api/users/${id}/role`, { role }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["analytics", "admin"] });
+    },
+  });
+}
+
+/** Upload an image (avatar) */
+export function useUploadImage() {
+  return useMutation({
+    mutationFn: ({ dataUrl, userId }: { dataUrl: string; userId: string }) =>
+      postJson(`/api/upload`, { dataUrl, userId }),
+  });
+}
+

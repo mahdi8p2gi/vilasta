@@ -37,7 +37,7 @@ import {
   Legend,
 } from "recharts";
 import { useAppStore, type DashboardTab } from "@/store/app-store";
-import { useAdminAnalytics } from "@/hooks/use-api";
+import { useAdminAnalytics, useUpdatePropertyStatus, useDeleteReview, useUpdateUserRole, useDeleteProperty } from "@/hooks/use-api";
 import {
   formatToman,
   formatTomanCompact,
@@ -426,9 +426,16 @@ function AnalyticsTab() {
 /* ============================ USERS ============================ */
 function UsersTab() {
   const { data, isLoading } = useAdminAnalytics();
+  const updateUserRole = useUpdateUserRole();
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = React.useState("");
   const pageSize = 10;
+
+  const onRoleChange = (id: string, role: string) => {
+    updateUserRole.mutateAsync({ id, role }).then(() => {
+      toast.success("نقش کاربر به‌روزرسانی شد");
+    }).catch((e) => toast.error(e.message));
+  };
 
   const users = (data?.users ?? []) as any[];
   const filtered = users.filter(
@@ -494,9 +501,7 @@ function UsersTab() {
                 <div className="flex items-center gap-1">
                   <Select
                     defaultValue={u.role}
-                    onValueChange={(v) =>
-                      toast.success(`نقش کاربر به «${({ admin: "مدیر", host: "میزبان", customer: "کاربر", guest: "مهمان" } as Record<string, string>)[v] ?? v}» تغییر کرد`)
-                    }
+                    onValueChange={(v) => onRoleChange(u.id, v)}
                   >
                     <SelectTrigger className="h-8 w-28" size="sm">
                       <SelectValue />
@@ -567,6 +572,13 @@ function UsersTab() {
 function AdminPropertiesTab() {
   const { data, isLoading } = useAdminAnalytics();
   const goProperty = useAppStore((s) => s.goProperty);
+  const updateStatus = useUpdatePropertyStatus();
+
+  const onStatusChange = (id: string, status: string, label: string) => {
+    updateStatus.mutateAsync({ id, status }).then(() => {
+      toast.success(label);
+    }).catch((e) => toast.error(e.message));
+  };
 
   if (isLoading) return <DashboardSkeleton count={3} />;
   const properties = (data?.properties ?? []) as any[];
@@ -645,7 +657,7 @@ function AdminPropertiesTab() {
                         variant="ghost"
                         size="sm"
                         className="h-8 gap-1 text-emerald-600 hover:bg-emerald-500/10 hover:text-emerald-700"
-                        onClick={() => toast.success("اقامتگاه تأیید و فعال شد")}
+                        onClick={() => onStatusChange(p.id, "active", "اقامتگاه تأیید و فعال شد")}
                       >
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         تأیید
@@ -655,7 +667,7 @@ function AdminPropertiesTab() {
                         variant="ghost"
                         size="sm"
                         className="h-8 gap-1 text-amber-600 hover:bg-amber-500/10 hover:text-amber-700"
-                        onClick={() => toast.success("اقامتگاه تعلیق شد")}
+                        onClick={() => onStatusChange(p.id, "suspended", "اقامتگاه تعلیق شد")}
                       >
                         <Ban className="h-3.5 w-3.5" />
                         تعلیق
@@ -742,6 +754,13 @@ function AdminBookingsTab() {
 function AdminReviewsTab() {
   const { data, isLoading } = useAdminAnalytics();
   const goProperty = useAppStore((s) => s.goProperty);
+  const deleteReview = useDeleteReview();
+
+  const onDeleteReview = (id: string) => {
+    deleteReview.mutateAsync(id).then(() => {
+      toast.success("نظر حذف شد");
+    }).catch((e) => toast.error(e.message));
+  };
 
   if (isLoading) return <DashboardSkeleton count={3} />;
   const reviews = (data?.reviews ?? []) as any[];
@@ -813,7 +832,7 @@ function AdminReviewsTab() {
                       <AlertDialogCancel>انصراف</AlertDialogCancel>
                       <AlertDialogAction
                         className="bg-destructive text-white hover:bg-destructive/90"
-                        onClick={() => toast.success("نظر حذف شد")}
+                        onClick={() => onDeleteReview(r.id)}
                       >
                         حذف
                       </AlertDialogAction>

@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { useAppStore } from "@/store/app-store";
 import { cardImage, SHIMMER_BLUR } from "@/lib/image";
 import { toPersianDigits } from "@/lib/persian";
+import { toast } from "sonner";
 
 const experiences = [
   {
@@ -217,7 +218,11 @@ export function ExperiencesView() {
                       <span className="mr-1 text-xs font-normal text-muted-foreground">تومان</span>
                     </p>
                   </div>
-                  <Button size="sm" className="rounded-full">
+                  <Button
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => toast.success(`تجربه "${exp.title}" به سبد شما اضافه شد 🎉`)}
+                  >
                     رزرو تجربه
                   </Button>
                 </div>

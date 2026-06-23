@@ -52,6 +52,7 @@ import { AmenityBadge } from "@/components/shared/amenity-icon";
 import { PropertyCard } from "@/components/shared/property-card";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { EmptyState } from "@/components/shared/empty-state";
+import { ReviewWriteModal } from "@/components/property/review-write-modal";
 import { propertyTypeMeta } from "@/config/site";
 import {
   formatToman,
@@ -144,6 +145,7 @@ function PropertyDetailContent({ property }: { property: Property }) {
         <MapSection property={property} />
         <ReviewsSection
           propertyId={property.id}
+          propertyTitle={property.title}
           rating={property.rating}
           reviewCount={property.reviewCount}
         />
@@ -784,7 +786,18 @@ function MapSection({ property }: { property: Property }) {
               {property.city}، {property.province}
             </p>
           </div>
-          <Button variant="outline" className="gap-1.5 rounded-full" disabled>
+          <Button
+            variant="outline"
+            className="gap-1.5 rounded-full"
+            onClick={() => {
+              const lat = property.lat ?? 35.6892;
+              const lng = property.lng ?? 51.3890;
+              window.open(
+                `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
+                "_blank"
+              );
+            }}
+          >
             <MapPinned className="h-4 w-4" />
             مشاهده روی نقشه
           </Button>
@@ -808,16 +821,19 @@ const categoryLabels: { key: keyof Review; label: string }[] = [
 
 function ReviewsSection({
   propertyId,
+  propertyTitle,
   rating,
   reviewCount,
 }: {
   propertyId: string;
+  propertyTitle: string;
   rating: number;
   reviewCount: number;
 }) {
   const { data, isLoading } = usePropertyReviews(propertyId);
   const user = useAppStore((s) => s.user);
   const openAuth = useAppStore((s) => s.openAuth);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
 
   const reviews = data?.items ?? [];
   const summary = data?.summary;
@@ -827,7 +843,7 @@ function ReviewsSection({
       openAuth("login");
       return;
     }
-    toast.info("به‌زودی امکان ثبت نظر فعال خواهد شد");
+    setReviewModalOpen(true);
   };
 
   return (
@@ -921,6 +937,13 @@ function ReviewsSection({
           description="اولین نفری باشید که تجربه خود را به اشتراک می‌گذارد."
         />
       )}
+
+      <ReviewWriteModal
+        open={reviewModalOpen}
+        onClose={() => setReviewModalOpen(false)}
+        propertyId={propertyId}
+        propertyTitle={propertyTitle}
+      />
     </motion.section>
   );
 }

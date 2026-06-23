@@ -46,6 +46,7 @@ import { useAppStore, type DashboardTab } from "@/store/app-store";
 import {
   useHostProperties,
   useHostAnalytics,
+  useDeleteProperty,
 } from "@/hooks/use-api";
 import {
   formatToman,
@@ -212,6 +213,17 @@ function PropertiesTab() {
   const goProperty = useAppStore((s) => s.goProperty);
   const goDashboard = useAppStore((s) => s.goDashboard);
   const { data, isLoading } = useHostProperties(user.id);
+  const deleteProperty = useDeleteProperty();
+
+  const onDelete = (id: string) => {
+    try {
+      deleteProperty.mutateAsync(id).then(() => {
+        toast.success("اقامتگاه حذف شد");
+      });
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+  };
 
   if (isLoading) return <DashboardSkeleton count={3} />;
   if (!data || data.length === 0) {
@@ -327,7 +339,10 @@ function PropertiesTab() {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8"
-                          onClick={() => toast.info("ویرایش اقامتگاه به‌زودی فعال می‌شود")}
+                          onClick={() => {
+                            toast.info("برای ویرایش، فرم افزودن اقامتگاه را تکمیل کنید");
+                            goDashboard("add-property");
+                          }}
                         >
                           <Pencil className="h-3.5 w-3.5" />
                         </Button>
@@ -352,7 +367,7 @@ function PropertiesTab() {
                               <AlertDialogCancel>انصراف</AlertDialogCancel>
                               <AlertDialogAction
                                 className="bg-destructive text-white hover:bg-destructive/90"
-                                onClick={() => toast.success("اقامتگاه حذف شد")}
+                                onClick={() => onDelete(p.id)}
                               >
                                 حذف
                               </AlertDialogAction>

@@ -38,6 +38,8 @@ import {
   useBookings,
   useFavorites,
   useNotifications,
+  useUploadImage,
+  useMarkAllNotificationsRead,
 } from "@/hooks/use-api";
 import {
   formatToman,
@@ -194,6 +196,32 @@ export function UserDashboard() {
 /* ============================ PROFILE ============================ */
 function ProfileTab() {
   const user = useAppStore((s) => s.user)!;
+  const setUser = useAppStore((s) => s.setUser);
+  const uploadImage = useUploadImage();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const onAvatarClick = () => fileInputRef.current?.click();
+
+  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("حجم تصویر نباید بیشتر از ۲ مگابایت باشد");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataUrl = reader.result as string;
+      try {
+        await uploadImage.mutateAsync({ dataUrl, userId: user.id });
+        setUser({ ...user, avatar: dataUrl });
+        toast.success("تصویر پروفایل با موفقیت به‌روزرسانی شد");
+      } catch (err: any) {
+        toast.error(err.message || "خطا در آپلود تصویر");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const form = useForm<ProfileForm>({
     resolver: zodResolver(profileSchema),
@@ -228,10 +256,17 @@ function ProfileTab() {
             <button
               className="absolute bottom-1 left-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-luxury transition-transform hover:scale-110"
               aria-label="تغییر تصویر"
-              onClick={() => toast.info("آپلود تصویر به‌زودی فعال می‌شود")}
+              onClick={onAvatarClick}
             >
               <Camera className="h-4 w-4" />
             </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={onFileChange}
+            />
           </div>
           <div>
             <h3 className="text-lg font-bold">{user.name ?? "کاربر"}</h3>
@@ -572,6 +607,16 @@ function FavoritesTab() {
 function NotificationsTab() {
   const user = useAppStore((s) => s.user)!;
   const { data, isLoading } = useNotifications(user.id);
+  const markAllRead = useMarkAllNotificationsRead();
+
+  const onMarkAll = async () => {
+    try {
+      await markAllRead.mutateAsync(user.id);
+      toast.success("همه اعلان‌ها به‌عنوان خوانده‌شده علامت‌گذاری شدند");
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+  };
 
   if (isLoading) return <DashboardSkeleton count={3} />;
   if (!data || data.length === 0) {
@@ -594,7 +639,7 @@ function NotificationsTab() {
           variant="outline"
           size="sm"
           className="gap-1.5"
-          onClick={() => toast.success("همه اعلان‌ها به‌عنوان خوانده‌شده علامت‌گذاری شدند")}
+          onClick={onMarkAll}
         >
           <CheckCheck className="h-4 w-4" />
           علامت‌گذاری همه به‌عنوان خوانده شده
@@ -750,11 +795,16 @@ function SecurityTab() {
     form.reset();
   };
 
-  const sessions = [
+  const [sessions, setSessions] = React.useState([
     { id: 1, device: "Chrome — ویندوز", ip: "۵.۱۲۳.۴۵.۶۷", location: "تهران", current: true, icon: Monitor },
     { id: 2, device: "Safari — آیفون", ip: "۵.۱۲۳.۴۵.۸۹", location: "تهران", current: false, icon: Smartphone },
     { id: 3, device: "Chrome — اندروید", ip: "۲.۱۹۸.۱۰.۵", location: "اصفهان", current: false, icon: Smartphone },
-  ];
+  ]);
+
+  const onCloseSession = (id: number) => {
+    setSessions((prev) => prev.filter((s) => s.id !== id));
+    toast.success("نشست بسته شد");
+  };
 
   return (
     <div className="space-y-6">
@@ -871,7 +921,7 @@ function SecurityTab() {
                       variant="ghost"
                       size="sm"
                       className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-                      onClick={() => toast.success("نشست بسته شد")}
+                      onClick={() => onCloseSession(s.id)}
                     >
                       <LogOut className="h-3.5 w-3.5" />
                       خروج
