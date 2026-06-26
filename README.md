@@ -204,7 +204,7 @@ bun run db:reset     # Reset database
 
 ---
 
-## 🌈 Design System
+## ⚡ Design System
 
 ### Colors
 ```css
@@ -298,7 +298,7 @@ The app is a standard Next.js 16 project — deploys to any Node.js host (Netlif
 
 ## 📝 License
 
-MIT © 2025 Vilasta
+MIT © 2026 Vilasta
 
 ---
 
@@ -311,7 +311,7 @@ MIT © 2025 Vilasta
 
 <div align="center">
 
-**© 2025 Vilasta. All rights reserved.**
+**© 2026 Vilasta. All rights reserved.**
 
 Built with ❤️ for Iranian travelers
 
