@@ -305,7 +305,7 @@ MIT © 2025 Vilasta
 ## 📞 Contact
 
 - **Email:** themahdikga@gmail.com
-- **Location:** Tehran, Iran
+- **Location:** Arak, Iran
 
 ---
 
